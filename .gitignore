@@ -24,3 +24,6 @@ tests/
 tests/*
 
 *~
+
+src/AppBundle/DataFixtures/
+src/AppBundle/DataFixtures/*
