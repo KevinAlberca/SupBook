@@ -1,3 +1,11 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+ # Cette route sera gérée automatiquement par symfony, il faut juste la déclarer
+_security_login_check:
+    path: /login_check
+
+    # Cette route sera gérée automatiquement par symfony, il faut juste la déclarer
+_security_logout:
+    path: /logout
