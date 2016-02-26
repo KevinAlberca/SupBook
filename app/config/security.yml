@@ -1,13 +1,34 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
+    encoders:
+       AppBundle\Entity\User:
+          algorithm: sha512
+          encode-as-base64: true
+          iterations: 10
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
+        main:
+            entity: { class: AppBundle:User, property: login }
         in_memory:
             memory: ~
 
     firewalls:
+
+        secured_area:
+            pattern:    ^/
+            anonymous: ~
+            form_login:
+                login_path: /login
+                check_path: /login_check
+            logout:
+                path:   _security_logout
+                target: homepage
+
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -22,3 +43,7 @@ security:
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
