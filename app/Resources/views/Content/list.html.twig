@@ -1,0 +1,13 @@
+{% extends "::base.html.twig" %}
+{% block title %}Liste du contenu{% endblock %}
+
+{% block body %}
+    {% for c in contents %}
+        <div>
+            {{ c.id }}
+            {{ c.content }}
+            {{ c.idAuthor }}
+            {{ c.postDate|date("d F Y H:i:s") }}
+        </div>
+    {% endfor %}
+{% endblock %}
