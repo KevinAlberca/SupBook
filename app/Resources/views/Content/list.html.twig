@@ -2,6 +2,7 @@
 {% block title %}Liste du contenu{% endblock %}
 
 {% block body %}
+    {% include "Content/add.html.twig" %}
     {% for c in contents %}
         <div>
             {{ c.id }}
