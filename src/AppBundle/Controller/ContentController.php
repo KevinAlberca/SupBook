@@ -44,7 +44,7 @@ class ContentController extends Controller
                 $em = $this->getDoctrine()->getManager();
 
                 $content = new Content();
-                $content->setIdAuthor(623)
+                $content->setIdAuthor($this->get('security.token_storage')->getToken()->getUser()->id)
                         ->setContent($form->getData()->content)
                         ->setPostDate(new \DateTime());
 
