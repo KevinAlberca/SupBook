@@ -24,22 +24,22 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    public $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $lastname;
+    public $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $firstname;
+    public $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    protected $email;
+    public $email;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -61,7 +61,7 @@ class User implements UserInterface, \Serializable
     /**
      * @ORM\Column(type="integer", length=10)
      */
-    protected $promotion_year;
+    public $promotion_year;
 
     /**
      * @ORM\ManyToMany(targetEntity="Role")
@@ -72,7 +72,7 @@ class User implements UserInterface, \Serializable
      *
      * @var ArrayCollection $userRoles
      */
-    protected $userRoles;
+    public $userRoles;
 
     public function __construct()
     {
