@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Content;
+use AppBundle\Entity\Thread;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,16 +16,16 @@ class ContentController extends Controller
      */
     public function listAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager()->getRepository("AppBundle:Content");
+        $em = $this->getDoctrine()->getManager()->getRepository("AppBundle:Thread");
 
-        $contents = $em->findAll();
+        $threads = $em->findAll();
 
         $form = $this->getContentForm();
 
 
         // replace this example code with whatever you need
-        return $this->render('Content/list.html.twig', [
-            "contents" => $contents,
+        return $this->render('Content/list_thread.html.twig', [
+            "threads" => $threads,
             "form" => $form->createView(),
         ]);
     }
@@ -43,10 +43,10 @@ class ContentController extends Controller
             if($form->isSubmitted() && $form->isValid()){
                 $em = $this->getDoctrine()->getManager();
 
-                $content = new Content();
-                $content->setIdAuthor($this->get('security.token_storage')->getToken()->getUser()->id)
-                        ->setContent($form->getData()->content)
-                        ->setPostDate(new \DateTime());
+                $content = new Thread();
+                $content->setIdAuthor($this->get('security.token_storage')->getToken()->getUser()->id);
+                $content->setContent($form->getData()->content);
+                $content->setPostDate(new \DateTime());
 
                 $em->persist($content);
                 $em->flush();
@@ -55,13 +55,13 @@ class ContentController extends Controller
             }
         }
 
-        return $this->render("Content/add.html.twig", [
+        return $this->render("Content/add_thread.html.twig", [
             "form" => $form->createView(),
         ]);
     }
 
     private function getContentForm(){
-        $content = new Content();
+        $content = new Thread();
         $form = $this->createFormBuilder($content)
             ->add("content", TextareaType::class)
             ->add("submit", SubmitType::class)

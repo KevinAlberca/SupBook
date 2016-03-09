@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Content
  *
- * @ORM\Table(name="content")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ContentRepository")
+ * @ORM\Table(name="thread")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ThreadRepository")
  */
-class Content
+class Thread
 {
     /**
      * @var int
