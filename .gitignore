@@ -27,3 +27,6 @@ tests/*
 
 src/AppBundle/DataFixtures/
 src/AppBundle/DataFixtures/*
+
+web/css/.sass-cache/
+web/css/.sass-cache/*

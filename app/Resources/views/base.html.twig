@@ -3,10 +3,16 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{ asset("css/bootrap.min.css") }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset("css/flat-ui.min.css") }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset("css/style.css") }}" />
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        <div id="sidebar">
+            &nbsp;
+        </div>
     <header>
         <a href="/logout">Log out</a>
     </header>

@@ -1,0 +1,15 @@
+body {
+  background-color: #2f313d;
+  color: white; }
+
+#sidebar {
+  width: 50px;
+  padding: 10px 5px;
+  color: white;
+  background-color: #5ec6c6;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 0; }
+
+/*# sourceMappingURL=style.css.map */
