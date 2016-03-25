@@ -1,0 +1,29 @@
+body {
+  background-color: #2f313d;
+  color: white; }
+
+#sidebar {
+  width: 50px;
+  padding: 10px 5px;
+  color: white;
+  font-size: 25px;
+  background-color: #5ec6c6;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 0; }
+
+.thread {
+  height: auto;
+  margin: 25px auto;
+  padding: 0 !important;
+  background: red;
+  list-style: none;
+  clear: both; }
+  .thread .informations {
+    background: green;
+    vertical-align: middle; }
+  .thread > * {
+    padding: 10px 15px; }
+
+/*# sourceMappingURL=style.css.map */
