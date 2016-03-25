@@ -1,0 +1,60 @@
+$darkBlue: rgba(47, 49, 61, 1.0);
+$lightBlue: rgba(94, 198, 198, 1.0);
+$white: rgba(255,255,255,1.0);
+
+body {
+    background-color: $darkBlue;
+    color:$white;
+}
+
+#sidebar
+{
+    width:50px;
+    padding:10px 5px;
+    color:$white;
+    font-size: 25px;
+    background-color: $lightBlue;
+    position:fixed;
+    left:0;
+    bottom:0;
+    top:0;
+
+    #toggle-sidebar {
+        width:50px;
+        height:40px;
+        position:absolute;
+        padding:0 10px;
+        right:0;
+        top:0;
+        background:green;
+        text-align: center;
+
+    }
+
+    &.expanded {
+        width:250px;
+        background-color:red;
+
+        #toggle-sidebar {
+
+        }
+    }
+}
+
+.thread {
+    height:auto;
+    margin:25px auto;
+    padding:0 !important;
+    background:red;
+    list-style: none;
+    clear:both;
+
+    .informations {
+        background:green;
+        vertical-align: middle;
+    }
+
+    & > * {
+        padding:10px 15px;
+    }
+}
