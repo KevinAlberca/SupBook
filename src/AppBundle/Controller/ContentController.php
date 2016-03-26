@@ -42,7 +42,6 @@ class ContentController extends Controller
         if($request->getMethod() == "POST"){
             if($form->isSubmitted() && $form->isValid()){
                 $em = $this->getDoctrine()->getManager();
-
                 $content = new Thread();
                 $content->setIdAuthor($this->get('security.token_storage')->getToken()->getUser()->id);
                 $content->setContent($form->getData()->content);
