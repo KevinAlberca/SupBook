@@ -1,0 +1,22 @@
+{% extends "::base.html.twig" %}
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            {{ user.0.id }}
+            {{ user.0.lastname }}
+            {{ user.0.firstname }}
+            {{ user.0.email }}
+            {{ user.0.promotionYear }}
+        </div>
+        <div class="col-xs-12 col-sm-8" style="background:red;">
+             {% for t in threads %}
+                 {{ t.idAuthor }}<br/>
+                 {{ t.content }}
+                 {{ t.postDate|date("d F Y H:i:s") }}<br/>
+                 {{ t.id }}
+             {% endfor %}
+        </div>
+    </div>
+{% endblock %}
