@@ -31,6 +31,28 @@ body {
 
     }
 
+    .fui-description {
+        display:none;
+    }
+
+    .menu {
+        margin:50px auto;
+        li {
+            text-align: center;
+        }
+
+        li:last-child {
+            position:absolute;
+            padding:0 10px;
+            bottom:0;
+            text-align: center;
+        }
+
+        a {
+            color:$white;
+        }
+    }
+
     &.expanded {
         width:250px;
         background-color:red;
@@ -38,6 +60,11 @@ body {
         #toggle-sidebar {
 
         }
+
+        .fui-description {
+            display:inline-block;
+        }
+
     }
 }
 

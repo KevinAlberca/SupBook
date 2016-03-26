@@ -21,9 +21,24 @@ body {
     top: 0;
     background: green;
     text-align: center; }
+  #sidebar .fui-description {
+    display: none; }
+  #sidebar .menu {
+    margin: 50px auto; }
+    #sidebar .menu li {
+      text-align: center; }
+    #sidebar .menu li:last-child {
+      position: absolute;
+      padding: 0 10px;
+      bottom: 0;
+      text-align: center; }
+    #sidebar .menu a {
+      color: white; }
   #sidebar.expanded {
     width: 250px;
     background-color: red; }
+    #sidebar.expanded .fui-description {
+      display: inline-block; }
 
 .thread {
   height: auto;
