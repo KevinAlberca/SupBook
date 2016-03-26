@@ -18,7 +18,9 @@ class ContentController extends Controller
     {
         $em = $this->getDoctrine()->getManager()->getRepository("AppBundle:Thread");
 
-        $threads = $em->findAll();
+        $threads = $em->findBy([], [
+            "id" => "DESC",
+        ]);
 
         $form = $this->getContentForm();
 
