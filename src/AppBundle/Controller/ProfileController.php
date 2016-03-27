@@ -18,7 +18,7 @@ class ProfileController extends Controller
 {
 
     /**
-     * @Route("/profile")
+     * @Route("/profile", name="user_profile")
      */
     public function showMyProfileAction()
     {
@@ -37,5 +37,29 @@ class ProfileController extends Controller
             "user" => $user,
             "threads" => $threads
         ]);
+    }
+
+    /**
+     * @Route("/profile/{member_id}", name="member_profile")
+     */
+    public function showMemberProfileAction($member_id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository("AppBundle:User")->findBy(["id" => $member_id]);
+
+        if($user){
+            $threads = $em->getRepository("AppBundle:Thread")->findBy([
+                "idAuthor" => $member_id,
+            ]);
+
+            return $this->render("Profile/profile.html.twig", [
+                "user" => $user,
+                "threads" => $threads,
+            ]);
+        } else {
+            return "This member ".$member_id." doesn't exists !";
+        }
+
     }
 }
