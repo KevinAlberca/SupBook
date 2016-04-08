@@ -11,6 +11,9 @@
         <a href="/logout">Log out</a>
     </header>
         {% block body %}{% endblock %}
+
+        <script type="text/javascript" src="{{ asset("js/jquery-2.2.3.min.js") }}"></script>
+        <script type="text/javascript" src="{{ asset("js/script.js") }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
