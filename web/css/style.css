@@ -1,56 +1,6 @@
-body {
-  background-color: #2f313d;
-  color: white; }
-
-#sidebar {
-  width: 50px;
-  padding: 10px 5px;
-  color: white;
-  font-size: 25px;
-  background-color: #5ec6c6;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  top: 0; }
-  #sidebar #toggle-sidebar {
-    width: 50px;
-    height: 40px;
-    position: absolute;
-    padding: 0 10px;
-    right: 0;
-    top: 0;
-    background: green;
-    text-align: center; }
-  #sidebar .fui-description {
-    display: none; }
-  #sidebar .menu {
-    margin: 50px auto; }
-    #sidebar .menu li {
-      text-align: center; }
-    #sidebar .menu li:last-child {
-      position: absolute;
-      padding: 0 10px;
-      bottom: 0;
-      text-align: center; }
-    #sidebar .menu a {
-      color: white; }
-  #sidebar.expanded {
-    width: 250px;
-    background-color: red; }
-    #sidebar.expanded .fui-description {
-      display: inline-block; }
-
-.thread {
-  height: auto;
-  margin: 25px auto;
-  padding: 0 !important;
-  background: red;
-  list-style: none;
-  clear: both; }
-  .thread .informations {
-    background: green;
-    vertical-align: middle; }
-  .thread > * {
-    padding: 10px 15px; }
+nav {
+  background-color: #505050; }
+  nav .dropdown-content {
+    margin-top: 65px; }
 
 /*# sourceMappingURL=style.css.map */
