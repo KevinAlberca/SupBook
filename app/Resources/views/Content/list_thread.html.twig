@@ -8,13 +8,15 @@
         <li class="thread">
             {{ t.id }}
             {{ t.content }}
-            {{ t.idAuthor }}
-            {{ t.postDate|date("d F Y H:i:s") }}
+            <hr/>
+            Poste par : {{ t.lastname|upper }} {{ t.firstname }} le {{ t.postDate|date("d F Y H:i:s") }}
+
             <button type="button" class="reply-to" value="{{ t.id }}">Repondre</button>
             <div class="comments-{{ t.id }}" style="display:none;">
                 my hidden replies content
             </div>
         </li>
     {% endfor %}
+
     </ul>
 {% endblock %}
