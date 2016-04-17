@@ -3,4 +3,7 @@ nav {
   nav .dropdown-content {
     margin-top: 65px; }
 
+div.comment {
+  display: none; }
+
 /*# sourceMappingURL=style.css.map */

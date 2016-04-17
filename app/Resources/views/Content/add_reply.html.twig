@@ -1,0 +1,8 @@
+{% if thread_id is not null %}
+    <form method="POST" action="{{ path("add_reply") }}">
+        {{ form_start(reply_form) }}
+        {{ form_row(reply_form.content) }}
+        {{ form_row(reply_form.id_thread, { 'value': thread_id }) }}
+        {{ form_end(reply_form) }}
+    </form>
+{% endif %}

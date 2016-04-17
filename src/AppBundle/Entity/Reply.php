@@ -19,35 +19,35 @@ class Reply
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    public $id;
 
     /**
      * @var int
      *
      * @ORM\Column(name="id_thread", type="integer")
      */
-    private $idThread;
+    public $idThread;
 
     /**
      * @var int
      *
      * @ORM\Column(name="id_author", type="integer")
      */
-    private $idAuthor;
+    public $idAuthor;
 
     /**
      * @var string
      *
      * @ORM\Column(name="content", type="text")
      */
-    private $content;
+    public $content;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="post_date", type="datetime")
      */
-    private $postDate;
+    public $postDate;
 
 
     /**
