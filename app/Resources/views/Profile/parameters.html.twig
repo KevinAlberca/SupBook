@@ -1,0 +1,12 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    <h1>Parameters</h1>
+    {{ user.0.id }}
+    {{ user.0.lastname|upper }}
+    {{ user.0.firstname|capitalize }}
+    {{ user.0.promotionYear }}
+    {{ user.0.email }}
+
+    {{ include("Profile/change_email.html.twig", { 'user_email': user.0.email }) }}
+{% endblock %}
