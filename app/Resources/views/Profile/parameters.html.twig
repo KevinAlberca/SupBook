@@ -3,12 +3,16 @@
 {% block title %}Parametres du Compte{% endblock %}
 
 {% block body %}
-    <h1>Parameters</h1>
+    <h1 class="center">Parameters</h1>
     {{ user.id }}
     {{ user.lastname|upper }}
     {{ user.firstname|capitalize }}
     {{ user.promotionYear }}
     {{ user.email }}
 
-    {{ include("Profile/change_email.html.twig", { 'user_email': user.email }) }}
+    <div class="row">
+        <div class="col s12 m5 l4">
+            {{ include("Profile/change_email.html.twig", { 'user_email': user.email }) }}
+        </div>
+    </div>
 {% endblock %}
