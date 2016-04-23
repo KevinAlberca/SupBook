@@ -6,4 +6,8 @@ nav {
 div.comment {
   display: none; }
 
+button.reply-to {
+  background: none;
+  border: none; }
+
 /*# sourceMappingURL=style.css.map */

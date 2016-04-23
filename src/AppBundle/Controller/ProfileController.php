@@ -30,7 +30,7 @@ class ProfileController extends Controller
     {
         $user_id = $this->get('security.token_storage')->getToken()->getUser()->id;
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository("AppBundle:User")->findBy([
+        $user = $em->getRepository("AppBundle:User")->findOneBy([
             "id" => $user_id,
         ]);
 
@@ -52,7 +52,7 @@ class ProfileController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $user = $em->getRepository("AppBundle:User")->findBy(["id" => $member_id]);
+        $user = $em->getRepository("AppBundle:User")->findOneBy(["id" => $member_id]);
 
         if($user){
             $threads = $em->getRepository("AppBundle:Thread")->findBy([

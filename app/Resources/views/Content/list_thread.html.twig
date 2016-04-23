@@ -6,11 +6,11 @@
     <ul>
     {% for t in threads %}
         <li class="thread">
-            {{ t.id }}
-            {{ t.content }}
-            Poste par : {{ t.lastname|upper }} {{ t.firstname }} le {{ t.postDate|date("d F Y H:i:s") }}
+            {{ t.content|nl2br }}
+            <br/>
+            <i class="material-icons">perm_identity</i>{{ t.lastname|upper }} {{ t.firstname }} <i class="material-icons">schedule</i> {{ t.postDate|date("d F Y H:i:s") }}
 
-            <button type="button" class="reply-to" value="{{ t.id }}">Repondre</button>
+            <button type="button" class="reply-to" value="{{ t.id }}"><i class="material-icons">reply</i></button>
             <div class="comment" id="comment-{{ t.id }}">
                 <ul class="comments">
                 {% for r in replies %}
@@ -19,7 +19,7 @@
                             {{ r.id }}
                             {{ r.idThread }}
                             {{ r.idAuthor }}
-                            {{ r.content }}
+                            {{ r.content|nl2br }}
                             {{ r.postDate|date("d F Y H:i:s") }}
                         </li>
                     {% endif %}
@@ -27,8 +27,9 @@
                 </ul>
                 <form method="POST" action="{{ path("add_reply") }}">
                     {{ form_start(t.reply_form) }}
-                    {{ form_row(t.reply_form.content) }}
-                    {{ form_row(t.reply_form.id_thread, { 'value': t.id }) }}
+                        {{ form_row(t.reply_form.content, { "attr" : { "class" : "materialize-textarea" }}) }}
+                        {{ form_row(t.reply_form.id_thread, { "value" : t.id }) }}
+                        {{ form_row(t.reply_form.submit, { "attr" : { "class" : "btn" }}) }}
                     {{ form_end(t.reply_form) }}
                 </form>
 
