@@ -30,7 +30,6 @@ class ContentController extends Controller
 
         foreach ($threads as $thread) {
             $thread["reply_form"] = $reply_form->createView();
-//            $allThreads[] = array_merge($thread, $reply_form->createView());
             $allThreads[] = $thread;
         }
 
@@ -41,10 +40,33 @@ class ContentController extends Controller
         return $this->render('Content/list_thread.html.twig', [
             "threads" => $allThreads,
             "thread_form" => $thread_form->createView(),
-//            "reply_form" => $reply_form->createView(),
             "replies" => $replies,
         ]);
-//        return new Response("OK");
+    }
+
+    /**
+     * @Route("/threads/{id}", name="one_thread")
+     */
+    public function getOneThreadAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $thread = $em->getRepository("AppBundle:Thread")->getOneThreadById($id);
+
+        if($thread){
+            $replies = $em->getRepository("AppBundle:Reply")->findBy([
+                "idThread" => $id,
+            ]);
+
+            return $this->render("Content/one_thread.html.twig", [
+                "thread" => $thread,
+                "replies" => $replies,
+                "reply_form" => $this->getReplyForm()->createView(),
+                "id" => $id,
+            ]);
+
+        }
+
+        return new Response("Error 404");
     }
 
     /**
