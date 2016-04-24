@@ -1,0 +1,25 @@
+{% extends "::base.html.twig" %}
+
+
+{% block body %}
+    {{ thread.id }}
+    {{ thread.content|nl2br }}
+    <br/>
+    <i class="material-icons">perm_identity</i>{{ thread.lastname|upper }} {{ thread.firstname }} <i class="material-icons">schedule</i> {{ thread.postDate|date("d F Y H:i:s") }}
+    <hr/>
+    {% for reply in replies %}
+        {{ reply.id }}
+        {{ reply.idAuthor }}
+        {{ reply.content|nl2br }}
+        <br/>
+        {{ reply.postDate|date("d F Y H:i:s") }}
+    {% endfor %}
+
+    <form method="POST" action="{{ path("add_reply") }}">
+        {{ form_start(reply_form) }}
+            {{ form_row(reply_form.content, { 'attr': {'class': 'materialize-textarea' }}) }}
+            {{ form_row(reply_form.id_thread, { 'value': id }) }}
+            {{ form_row(reply_form.submit, { 'attr' : { 'class': 'btn' }}) }}
+        {{ form_end(reply_form) }}
+    </form>
+{% endblock %}
