@@ -27,9 +27,25 @@ class GroupController extends Controller
         $bachelor_ids = $em->getRepository("AppBundle:User")->getDistinctPromotion();
 
         if(in_array($year, $bachelor_ids)){
-            return new Response("OK");
+            return new Response("OK", 200);
         } else {
             return new Response("Tu ne fais pas partit de cette classe gros !", 403);
         }
+    }
+
+    /**
+     * @Route("/{shortcut_bachelor}", name="bachelor_group")
+     */
+    public function getYourBachelorThreads(Request $request, $shortcut_bachelor)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user_bachelor =  $em->getRepository("AppBundle:Bachelor")->findOneBy(["id" => $this->get('security.token_storage')->getToken()->getUser()->id_bachelor]);
+
+        if($user_bachelor->shortcut == $shortcut_bachelor){
+            return new Response("Ok, it's your bachelor !", 200);
+        } else {
+            return new Response("It's not your bachelor", 403);
+        }
+
     }
 }

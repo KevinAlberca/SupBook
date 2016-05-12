@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
 class User implements UserInterface, \Serializable
 {
@@ -62,6 +63,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="integer", length=10)
      */
     public $promotion_year;
+
+    /**
+     * @ORM\Column(type="integer", length=10)
+     */
+    public $id_bachelor;
 
     /**
      * @ORM\ManyToMany(targetEntity="Role")
@@ -225,6 +231,22 @@ class User implements UserInterface, \Serializable
         $this->promotion_year = $promotion_year;
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getIdBachelor()
+    {
+        return $this->id_bachelor;
+    }
+
+    /**
+     * @param mixed $id_bachelor
+     */
+    public function setIdBachelor($id_bachelor)
+    {
+        $this->id_bachelor = $id_bachelor;
+    }
 
 
     /**
