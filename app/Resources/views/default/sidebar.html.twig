@@ -1,0 +1,11 @@
+{{ dump(user) }}
+
+<div class="row">
+    <div class="col s1" style="background: red">
+        <ul>
+            <li><a href="/promotion/{{ user.promotionYear }}">Ma Promotion</a></li>
+            <li><a href="/bachelor/{{ bachelor.shortcut }}/{{ user.promotionYear }}">Ma classe</a></li>
+            <li><a href="/bachelor/{{ bachelor.shortcut }}">Mon Bachelor</a></li>
+        </ul>
+    </div>
+</div>

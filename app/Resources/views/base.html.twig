@@ -11,7 +11,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <div class="navbar-fixed">
+    <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper">
                     <a href="/" class="brand-logo">
@@ -30,7 +30,9 @@
                 </div>
             </nav>
         </div>
+        {{ render(controller("AppBundle:Default:userInfo")) }}
         <div class="container">
+            {{ app.request.getPathInfo }}
             {% block body %}{% endblock %}
         </div>
 
