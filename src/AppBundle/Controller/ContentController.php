@@ -20,27 +20,13 @@ class ContentController extends Controller
      */
     public function listAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $ts = $this->get("content_service");
+        $r = $ts->listAllThreads($this->getThreadForm(), $this->getReplyForm());
 
-        $threads = $em->getRepository("AppBundle:Thread")->getAllThreads();
-        $replies = $em->getRepository("AppBundle:Reply")->findAll();
-        $allThreads = [];
-        $reply_form = $this->getReplyForm();
-
-
-        foreach ($threads as $thread) {
-            $thread["reply_form"] = $reply_form->createView();
-            $allThreads[] = $thread;
-        }
-
-
-        $thread_form = $this->getThreadForm();
-
-
-        return $this->render('Content/list_thread.html.twig', [
-            "threads" => $allThreads,
-            "thread_form" => $thread_form->createView(),
-            "replies" => $replies,
+        return $this->render("Content/list_thread.html.twig", [
+            "threads" => $r["threads"],
+            "replies" => $r["replies"],
+            "thread_form" => $r["thread_form"],
         ]);
     }
 
@@ -49,7 +35,8 @@ class ContentController extends Controller
      */
     public function getOneThreadAction(Request $request, $id)
     {
-        if($this->get("thread_service")->getOneThreadPerId($id)){
+        $ts = $this->get("content_service");
+        if($ts->getOneThreadPerId($id)){
             $r = $this->get("thread_service")->getOneThreadPerId($id);
             return $this->render("Content/one_thread.html.twig", [
                 "thread" => $r["thread"],
