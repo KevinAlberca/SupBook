@@ -49,24 +49,17 @@ class ContentController extends Controller
      */
     public function getOneThreadAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $thread = $em->getRepository("AppBundle:Thread")->getOneThreadById($id);
-
-        if($thread){
-            $replies = $em->getRepository("AppBundle:Reply")->findBy([
-                "idThread" => $id,
-            ]);
-
+        if($this->get("thread_service")->getOneThreadPerId($id)){
+            $r = $this->get("thread_service")->getOneThreadPerId($id);
             return $this->render("Content/one_thread.html.twig", [
-                "thread" => $thread,
-                "replies" => $replies,
+                "thread" => $r["thread"],
+                "replies" => $r["replies"],
                 "reply_form" => $this->getReplyForm()->createView(),
                 "id" => $id,
             ]);
-
         }
 
-        return new Response("Error 404");
+        return new Response("Thread not found", 404);
     }
 
     /**

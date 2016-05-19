@@ -18,13 +18,12 @@ class GroupController extends Controller
 {
 
     /**
-     * @Route("/promo/{year}", name="class_group")
+     * @Route("/promotion/{year}", name="class_group")
      */
     public function getYourClassThreads(Request $request, $year)
     {
-        $group_service = $this->get("group_service");
+        $group_service = $this->get("thread_service");
 
-        var_dump($group_service->getPromotionThreads($year));
         $user_promotion = ($this->get('security.token_storage')->getToken()->getUser()->promotion_year != $year) ? new Response("Error") : true;
         $em = $this->getDoctrine()->getManager();
         $bachelor_ids = $em->getRepository("AppBundle:User")->getDistinctPromotion();
