@@ -31,6 +31,9 @@ class ContentService
         $distinct_promotion = $this->_em->getRepository("AppBundle:User")->getDistinctPromotion();
         $user_promotion = $this->_user->promotion_year;
 
+        $promotion_threads = $this->_em->getRepository("AppBundle:Thread");
+        var_dump($promotion_threads->findBy(["idLocation" => "16"]));
+
         if(in_array($promotion_year, $distinct_promotion) && $promotion_year == $user_promotion){
             return true;
         } else {
