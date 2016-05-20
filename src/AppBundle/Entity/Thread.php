@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +43,12 @@ class Thread
      */
     public $idAuthor;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_location", type="integer")
+     */
+    public $idLocation;
 
     /**
      * Get id
@@ -124,5 +131,22 @@ class Thread
     {
         return $this->idAuthor;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getIdLocation()
+    {
+        return $this->idLocation;
+    }
+
+    /**
+     * @param mixed $idLocation
+     */
+    public function setIdLocation($idLocation)
+    {
+        $this->idLocation = $idLocation;
+    }
+
 }
 

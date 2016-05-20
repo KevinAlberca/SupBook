@@ -77,4 +77,15 @@ class ContentService
         ];
     }
 
+    public function getThreadsLocationForUser()
+    {
+        $loc = $this->_em->getRepository("AppBundle:Location");
+        $possible_location = [
+            "classe" => $loc->findBy(["type" => "classe", "variety" => $this->_user->id_bachelor, "subVariety" => $this->_user->promotion_year]),
+            "bachelor" => $loc->findBy(["type" => "bachelor", "variety" => $this->_user->id_bachelor]),
+            "promotion" => $loc->findBy(["type" => "promotion", "variety" => $this->_user->promotion_year]),
+        ];
+        return $possible_location;
+    }
+
 }

@@ -7,6 +7,7 @@ use AppBundle\Entity\Thread;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -20,8 +21,8 @@ class ContentController extends Controller
      */
     public function listAction(Request $request)
     {
-        $ts = $this->get("content_service");
-        $r = $ts->listAllThreads($this->getThreadForm(), $this->getReplyForm());
+        $cs = $this->get("content_service");
+        $r = $cs->listAllThreads($this->getThreadForm(), $this->getReplyForm());
 
         return $this->render("Content/list_thread.html.twig", [
             "threads" => $r["threads"],
@@ -35,9 +36,9 @@ class ContentController extends Controller
      */
     public function getOneThreadAction(Request $request, $id)
     {
-        $ts = $this->get("content_service");
-        if($ts->getOneThreadPerId($id)){
-            $r = $this->get("thread_service")->getOneThreadPerId($id);
+        $cs = $this->get("content_service");
+        if($cs->getOneThreadPerId($id)){
+            $r = $cs->getOneThreadPerId($id);
             return $this->render("Content/one_thread.html.twig", [
                 "thread" => $r["thread"],
                 "replies" => $r["replies"],
@@ -61,11 +62,13 @@ class ContentController extends Controller
         if($request->getMethod() == "POST") {
             if($form->isSubmitted() && $form->isValid()) {
                 if($form->getData()->content != null) {
+                    var_dump($form->getData());
                     $em = $this->getDoctrine()->getManager();
                     $thread = new Thread();
                     $thread->setIdAuthor($this->get('security.token_storage')->getToken()->getUser()->id);
                     $thread->setContent($form->getData()->content);
                     $thread->setPostDate(new \DateTime());
+                    $thread->setIdLocation($form->getData()->idLocation);
                     $em->persist($thread);
                     $em->flush();
                 }
@@ -112,9 +115,19 @@ class ContentController extends Controller
 
     private function getThreadForm()
     {
+        $cs = $this->get("content_service");
+        $r = $cs->getThreadsLocationForUser();
+        var_dump($r);
         $thread = new Thread();
         $form = $this->createFormBuilder($thread)
             ->add("content", TextareaType::class)
+            ->add("id_location", ChoiceType::class, [
+                "choices"  => array(
+                    'Classe' => $r["classe"][0]->id,
+                    'Bachelor' => $r["bachelor"][0]->id,
+                    'Promotion' => $r["promotion"][0]->id,
+                ),
+            ])
             ->add("submit", SubmitType::class)
             ->getForm();
         return $form;
