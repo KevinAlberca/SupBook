@@ -62,12 +62,12 @@ class ContentController extends Controller
     {
         $cs = $this->get("content_service");
         $threads = $cs->getThreadsPerLocation("promotion");
-//        $replies = $cs->getReplies();
+        $replies = $cs->getReplies();
 
         if($threads) {
             return $this->render("Content/list_thread.html.twig", [
                 "threads" => $threads,
-                "replies" => null,
+                "replies" => $replies,
                 "thread_form" => $this->getThreadForm()->createView(),
                 "reply_form" => $this->getReplyForm()->createView(),
             ]);
@@ -85,7 +85,6 @@ class ContentController extends Controller
         $cs = $this->get("content_service");
         $threads = $cs->getThreadsPerLocation("bachelor");
         $replies = $cs->getReplies();
-//        $replies = null;
 
         if($threads) {
             return $this->render("Content/list_thread.html.twig", [
