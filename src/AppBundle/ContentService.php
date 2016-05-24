@@ -10,35 +10,41 @@ namespace AppBundle;
 
 use AppBundle\Entity\Thread;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\DependencyInjection\Container;
+
 
 class ContentService
 {
     protected $_context;
     protected $_em;
     private $_user;
+    protected $_container;
 
-    public function __construct(TokenStorage $context, EntityManager $em)
+    public function __construct(TokenStorage $context, EntityManager $em, Container $container)
     {
         $this->_context = $context;
         $this->_em = $em;
         $this->_user = $this->_context->getToken()->getUser();
+        $this->_container = $container;
     }
 
-    public function getPromotionThreads($promotion_year)
+    public function listAllThreads($reply_form)
     {
-        $distinct_promotion = $this->_em->getRepository("AppBundle:User")->getDistinctPromotion();
-        $user_promotion = $this->_user->promotion_year;
+        $threads = $this->_em->getRepository("AppBundle:Thread")->getAllThreads();
+        $replies = $this->_em->getRepository("AppBundle:Reply")->findAll();
+        $allThreads = [];
 
-        $promotion_threads = $this->_em->getRepository("AppBundle:Thread");
-        var_dump($promotion_threads->findBy(["idLocation" => "16"]));
 
-        if(in_array($promotion_year, $distinct_promotion) && $promotion_year == $user_promotion){
-            return true;
-        } else {
-            return false;
+        foreach ($threads as $thread) {
+            $thread["reply_form"] = $reply_form->createView();
+            $allThreads[] = $thread;
         }
+
+        return [
+            "threads" => $allThreads,
+            "replies" => $replies,
+        ];
     }
 
     public function getOneThreadPerId($id)
@@ -61,25 +67,6 @@ class ContentService
 
     }
 
-    public function listAllThreads($thread_form, $reply_form)
-    {
-        $threads = $this->_em->getRepository("AppBundle:Thread")->getAllThreads();
-        $replies = $this->_em->getRepository("AppBundle:Reply")->findAll();
-        $allThreads = [];
-
-
-        foreach ($threads as $thread) {
-            $thread["reply_form"] = $reply_form->createView();
-            $allThreads[] = $thread;
-        }
-
-        return [
-            "threads" => $allThreads,
-            "thread_form" => $thread_form->createView(),
-            "replies" => $replies,
-        ];
-    }
-
     public function getThreadsLocationForUser()
     {
         $loc = $this->_em->getRepository("AppBundle:Location");
@@ -89,6 +76,19 @@ class ContentService
             "promotion" => $loc->findBy(["type" => "promotion", "variety" => $this->_user->promotion_year]),
         ];
         return $possible_location;
+    }
+
+    public function getThreadsPerLocation($type)
+    {
+        $threads_location = $this->getThreadsLocationForUser()[$type][0]->id;
+        $threads = $this->_em->getRepository("AppBundle:Thread")->getThreadsWithLocation($threads_location);
+        return [
+            "threads" => $threads,
+        ];
+    }
+
+    public function getReplies(){
+        return $this->_em->getRepository("AppBundle:Reply")->findAll();
     }
 
 }

@@ -10,4 +10,4 @@ services:
 
     content_service:
         class: AppBundle\ContentService
-        arguments: ["@security.token_storage", "@doctrine.orm.entity_manager"]
+        arguments: ["@security.token_storage", "@doctrine.orm.entity_manager", "@service_container"]

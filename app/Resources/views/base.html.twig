@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{% endblock %} - SUP'Book</title>
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{ asset("css/materialize.min.css") }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset("css/style.css") }}" />
@@ -30,7 +30,15 @@
                 </div>
             </nav>
         </div>
-        {{ render(controller("AppBundle:Default:userInfo")) }}
+        <div class="row">
+            <div class="col s2">
+                <ul>
+                    <li><a href="/promotion">Ma Promotion</a></li>
+                    <li><a href="/classe">Ma classe</a></li>
+                    <li><a href="/bachelor">Mon Bachelor</a></li>
+                </ul>
+            </div>
+        </div>
         <div class="container">
             {{ app.request.getPathInfo }}
             {% block body %}{% endblock %}

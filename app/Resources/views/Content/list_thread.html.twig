@@ -4,7 +4,8 @@
 {% block body %}
     {{ include('Content/add_thread.html.twig', {'form': thread_form}) }}
     <ul>
-    {% for t in threads %}
+    {% for thread in threads %}
+        {% for t in thread %}
         <li class="thread">
             {{ t.content|nl2br }}
             <br/>
@@ -13,29 +14,29 @@
             <button type="button" class="reply-to" value="{{ t.id }}"><i class="material-icons">reply</i></button>
             <div class="comment" id="comment-{{ t.id }}">
                 <ul class="comments">
-                {% for r in replies %}
-                    {% if r.idThread == t.id %}
-                        <li style="background:red;">
-                            {{ r.id }}
-                            {{ r.idThread }}
-                            {{ r.idAuthor }}
-                            {{ r.content|nl2br }}
-                            {{ r.postDate|date("d F Y H:i:s") }}
-                        </li>
-                    {% endif %}
-                {% endfor %}
+                    {% for r in replies %}
+                        {% if r.idThread == t.id %}
+                            <li>
+                                {{ r.id }}
+                                {{ r.idThread }}
+                                {{ r.idAuthor }}
+                                {{ r.content|nl2br }}
+                                {{ r.postDate|date("d F Y H:i:s") }}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
                 </ul>
-                <form method="POST" action="{{ path("add_reply") }}">
-                    {{ form_start(t.reply_form) }}
-                        {{ form_row(t.reply_form.content, { "attr" : { "class" : "materialize-textarea" }}) }}
-                        {{ form_row(t.reply_form.id_thread, { "value" : t.id }) }}
-                        {{ form_row(t.reply_form.submit, { "attr" : { "class" : "btn" }}) }}
-                    {{ form_end(t.reply_form) }}
-                </form>
-
+                {#<form method="POST" action="{{ path("add_reply") }}">#}
+                    {#{{ form_start(t.reply_form) }}#}
+                        {#{{ form_row(t.reply_form.content, { "attr" : { "class" : "materialize-textarea" }}) }}#}
+                        {#{{ form_row(t.reply_form.id_thread, { "value" : t.id }) }}#}
+                        {#{{ form_row(t.reply_form.submit, { "attr" : { "class" : "btn" }}) }}#}
+                    {#{{ form_end(t.reply_form) }}#}
+                {#</form>#}
             </div>
             <hr>
         </li>
+            {% endfor %}
     {% endfor %}
     </ul>
 {% endblock %}

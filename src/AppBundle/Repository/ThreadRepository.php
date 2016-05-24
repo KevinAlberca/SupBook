@@ -25,6 +25,18 @@ class ThreadRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getThreadsWithLocation($location)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select("t.id, t.content, u.lastname, u.firstname, t.postDate, u.promotion_year")
+            ->from("AppBundle:Thread", "t")
+            ->innerJoin("AppBundle:User", "u", "WITH", "u.id = t.idAuthor")
+            ->where("t.idLocation = ".$location)
+            ->addOrderBy("t.id", "DESC");
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
     public function getOneThreadById($id)
     {
         $qb = $this->_em->createQueryBuilder();

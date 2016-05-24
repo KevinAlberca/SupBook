@@ -21,14 +21,19 @@ class ContentController extends Controller
      */
     public function listAction(Request $request)
     {
-        $cs = $this->get("content_service");
-        $r = $cs->listAllThreads($this->getThreadForm(), $this->getReplyForm());
-
-        return $this->render("Content/list_thread.html.twig", [
-            "threads" => $r["threads"],
-            "replies" => $r["replies"],
-            "thread_form" => $r["thread_form"],
-        ]);
+        return $this->redirectToRoute("class_group");
+//        $cs = $this->get("content_service");
+//        $threads = $cs->listAllThreads($this->getReplyForm());
+//        $replies = $cs->getReplies();
+//
+//        var_dump($replies);
+//
+//        return $this->render("Content/list_thread.html.twig", [
+//            "threads" => $threads,
+//            "replies" => $replies,
+//            "thread_form" => $this->getThreadForm()->createView(),
+//            "reply_form" => $this->getReplyForm()->createView(),
+//        ]);
     }
 
     /**
@@ -48,6 +53,51 @@ class ContentController extends Controller
         }
 
         return new Response("Thread not found", 404);
+    }
+
+    /**
+     * @Route("/promotion", name="promotion_group")
+     */
+    public function getYourPromotionThreads(Request $request)
+    {
+        $cs = $this->get("content_service");
+        $threads = $cs->getThreadsPerLocation("promotion");
+//        $replies = $cs->getReplies();
+
+        if($threads) {
+            return $this->render("Content/list_thread.html.twig", [
+                "threads" => $threads,
+                "replies" => null,
+                "thread_form" => $this->getThreadForm()->createView(),
+                "reply_form" => $this->getReplyForm()->createView(),
+            ]);
+        } else {
+            return new Response("It's not your bachelor", 403);
+        }
+
+    }
+
+    /**
+     * @Route("/bachelor", name="bachelor_group")
+     */
+    public function getYourBachelorThreads(Request $request)
+    {
+        $cs = $this->get("content_service");
+        $threads = $cs->getThreadsPerLocation("bachelor");
+        $replies = $cs->getReplies();
+//        $replies = null;
+
+        if($threads) {
+            return $this->render("Content/list_thread.html.twig", [
+                "threads" => $threads,
+                "replies" => $replies,
+                "thread_form" => $this->getThreadForm()->createView(),
+                "reply_form" => $this->getReplyForm()->createView(),
+            ]);
+        } else {
+            return new Response("It's not your bachelor", 403);
+        }
+
     }
 
     /**
@@ -82,6 +132,28 @@ class ContentController extends Controller
     }
 
     /**
+     * @Route("/classe", name="class_group")
+     */
+    public function getYourClassThreads(Request $request)
+    {
+        $cs = $this->get("content_service");
+        $threads = $cs->getThreadsPerLocation("classe");
+        $replies = $cs->getReplies($threads);
+
+        if($threads) {
+            return $this->render("Content/list_thread.html.twig", [
+                "threads" => $threads,
+                "replies" => $replies,
+                "thread_form" => $this->getThreadForm()->createView(),
+                "reply_form" => $this->getReplyForm()->createView(),
+            ]);
+        } else {
+            return new Response("It's not your class", 403);
+        }
+
+    }
+
+    /**
      * @Route("/add_reply", name="add_reply")
      */
     public function addReplyAction(Request $request)
@@ -112,27 +184,7 @@ class ContentController extends Controller
         ]);
     }
 
-    private function getThreadForm()
-    {
-        $cs = $this->get("content_service");
-        $r = $cs->getThreadsLocationForUser();
-        var_dump($r);
-        $thread = new Thread();
-        $form = $this->createFormBuilder($thread)
-            ->add("content", TextareaType::class)
-            ->add("id_location", ChoiceType::class, [
-                "choices"  => array(
-                    'Classe' => $r["classe"][0]->id,
-                    'Bachelor' => $r["bachelor"][0]->id,
-                    'Promotion' => $r["promotion"][0]->id,
-                ),
-            ])
-            ->add("submit", SubmitType::class)
-            ->getForm();
-        return $form;
-    }
-
-    private function getReplyForm()
+    public function getReplyForm()
     {
         $reply = new Reply();
         $form = $this->createFormBuilder($reply)
@@ -141,6 +193,26 @@ class ContentController extends Controller
                 ->add("submit", SubmitType::class)
                 ->getForm();
 
+        return $form;
+    }
+
+    public function getThreadForm()
+    {
+        $cs = $this->get("content_service");
+        $r = $cs->getThreadsLocationForUser();
+
+        $thread = new Thread();
+        $form = $this->createFormBuilder($thread)
+            ->add("content", TextareaType::class)
+            ->add("id_location", ChoiceType::class, [
+                "choices"  => [
+                    'Classe' => $r["classe"][0]->id,
+                    'Bachelor' => $r["bachelor"][0]->id,
+                    'Promotion' => $r["promotion"][0]->id,
+                ],
+            ])
+            ->add("submit", SubmitType::class)
+            ->getForm();
         return $form;
     }
 
