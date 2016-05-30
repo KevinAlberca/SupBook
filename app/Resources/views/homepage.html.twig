@@ -1,34 +1,25 @@
 {% extends "::base.html.twig" %}
-{% block title %} - {% endblock %}
+{% block title %}Page d'Accueil{% endblock %}
 
 {% block body %}
-
-<div class="row">
-    <div class="col s12">
-        {{ include("Content/add_thread.html.twig", {'form': thread_form}) }}
-        <ul class="tabs">
-            <li class="tab col s4"><a class="active" href="#classe">Classe</a></li>
-            <li class="tab col s4"><a href="#promotion">Promotion</a></li>
-            <li class="tab col s4"><a href="#bachelor">Bachelor</a></li>
-        </ul>
-    </div>
-    <div id="classe" class="col s12">
-        {# Render class_group action #}
-        <ul>
+    <div class="row">
+        <div class="col s12">
+            {{ include("Content/add_thread.html.twig", {'form': thread_form}) }}
+            <ul class="tabs">
+                <li class="tab col s4"><a class="active" href="#classe">Classe</a></li>
+                <li class="tab col s4"><a href="#promotion">Promotion</a></li>
+                <li class="tab col s4"><a href="#bachelor">Bachelor</a></li>
+            </ul>
+        </div>
+        <div id="classe" class="col s12">
+            {{ dump(class_threads) }}
             {{ include('Content/list_content.html.twig', {'threads': class_threads}) }}
-        </ul>
-    </div>
-    <div id="promotion" class="col s12">
-        {# Render promotion_group action #}
-        <ul>
+        </div>
+        <div id="promotion" class="col s12">
             {{ include('Content/list_content.html.twig', {'threads': promotion_threads}) }}
-        </ul>
-    </div>
-    <div id="bachelor" class="col s12">
-        {# Render bachelor_group action #}
-        <ul>
+        </div>
+        <div id="bachelor" class="col s12">
             {{ include('Content/list_content.html.twig', {'threads': bachelor_threads}) }}
-        </ul>
+        </div>
     </div>
-</div>
 {% endblock %}

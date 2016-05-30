@@ -58,7 +58,7 @@ class ContentController extends Controller
     public function getClassThreadsAction(Request $request)
     {
         $cs = $this->get("content_service");
-        $threads = $cs->getThreadsPerLocation("classe");
+        $threads = $cs->getThreadsPerLocation("classe")["threads"];
         $replies = $cs->getReplies($threads);
 
         if($threads) {
@@ -80,7 +80,7 @@ class ContentController extends Controller
     public function getPromotionThreadsAction(Request $request)
     {
         $cs = $this->get("content_service");
-        $threads = $cs->getThreadsPerLocation("promotion");
+        $threads = $cs->getThreadsPerLocation("promotion")["threads"];
         $replies = $cs->getReplies();
 
         if($threads) {
@@ -102,7 +102,7 @@ class ContentController extends Controller
     public function getBachelorThreadsAction(Request $request)
     {
         $cs = $this->get("content_service");
-        $threads = $cs->getThreadsPerLocation("bachelor");
+        $threads = $cs->getThreadsPerLocation("bachelor")["threads"];
         $replies = $cs->getReplies();
 
         if($threads) {
