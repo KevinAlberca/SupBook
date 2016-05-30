@@ -80,9 +80,7 @@ class ContentService
     {
         $threads_location = $this->getThreadsLocationForUser()[$type][0]->id;
         $threads = $this->_em->getRepository("AppBundle:Thread")->getThreadsWithLocation($threads_location);
-        return [
-            "threads" => $threads,
-        ];
+        return $threads;
     }
 
     public function getReplies(){
