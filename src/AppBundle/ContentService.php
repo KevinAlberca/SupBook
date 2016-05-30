@@ -8,7 +8,6 @@
 
 namespace AppBundle;
 
-use AppBundle\Entity\Thread;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\DependencyInjection\Container;
@@ -29,18 +28,17 @@ class ContentService
         $this->_container = $container;
     }
 
-    public function listAllThreads($reply_form)
+    public function listAllThreads()
     {
-        $threads = $this->_em->getRepository("AppBundle:Thread")->getAllThreads();
+        $location = $this->getThreadsLocationForUser();
+
+        $allThreads = [
+            "classe" => $this->_em->getRepository("AppBundle:Thread")->getThreadsWithLocation($location["classe"][0]->id),
+            "promotion" => $this->_em->getRepository("AppBundle:Thread")->getThreadsWithLocation($location["promotion"][0]->id),
+            "bachelor" => $this->_em->getRepository("AppBundle:Thread")->getThreadsWithLocation($location["bachelor"][0]->id),
+        ];
+
         $replies = $this->_em->getRepository("AppBundle:Reply")->findAll();
-        $allThreads = [];
-
-
-        foreach ($threads as $thread) {
-            $thread["reply_form"] = $reply_form->createView();
-            $allThreads[] = $thread;
-        }
-
         return [
             "threads" => $allThreads,
             "replies" => $replies,

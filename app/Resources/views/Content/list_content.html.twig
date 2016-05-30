@@ -1,0 +1,24 @@
+{% for t in threads %}
+    <li class="thread">
+        {{ t.content|nl2br }}
+        <br/>
+        <i class="material-icons">perm_identity</i>{{ t.lastname|upper }} {{ t.firstname }} <i class="material-icons">schedule</i> {{ t.postDate|date("d F Y H:i:s") }}
+
+        <button type="button" class="reply-to" value="{{ t.id }}"><i class="material-icons">reply</i></button>
+        <div class="comment" id="comment-{{ t.id }}">
+            <ul class="comments">
+                {% for r in replies %}
+                    {% if r.idThread == t.id %}
+                        <li>
+                            {{ r.id }}
+                            {{ r.idThread }}
+                            {{ r.idAuthor }}
+                            {{ r.content|nl2br }}
+                            {{ r.postDate|date("d F Y H:i:s") }}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </li>
+{% endfor %}

@@ -21,19 +21,16 @@ class ContentController extends Controller
      */
     public function listAction(Request $request)
     {
-        return $this->redirectToRoute("class_group");
-//        $cs = $this->get("content_service");
-//        $threads = $cs->listAllThreads($this->getReplyForm());
-//        $replies = $cs->getReplies();
-//
-//        var_dump($replies);
-//
-//        return $this->render("Content/list_thread.html.twig", [
-//            "threads" => $threads,
-//            "replies" => $replies,
-//            "thread_form" => $this->getThreadForm()->createView(),
-//            "reply_form" => $this->getReplyForm()->createView(),
-//        ]);
+        $cs = $this->get("content_service");
+        $r = $cs->listAllThreads();
+
+        return $this->render("homepage.html.twig", [
+            "class_threads" => $r["threads"]["classe"],
+            "bachelor_threads" => $r["threads"]["bachelor"],
+            "promotion_threads" => $r["threads"]["promotion"],
+            "replies" => $r["replies"],
+            "thread_form" => $this->getThreadForm()->createView(),
+        ]);
     }
 
     /**
@@ -56,9 +53,31 @@ class ContentController extends Controller
     }
 
     /**
+     * @Route("/classe", name="class_group")
+     */
+    public function getClassThreadsAction(Request $request)
+    {
+        $cs = $this->get("content_service");
+        $threads = $cs->getThreadsPerLocation("classe");
+        $replies = $cs->getReplies($threads);
+
+        if($threads) {
+            return $this->render("Content/list_thread.html.twig", [
+                "threads" => $threads,
+                "replies" => $replies,
+                "thread_form" => $this->getThreadForm()->createView(),
+                "reply_form" => $this->getReplyForm()->createView(),
+            ]);
+        } else {
+            return new Response("It's not your class", 403);
+        }
+
+    }
+
+    /**
      * @Route("/promotion", name="promotion_group")
      */
-    public function getYourPromotionThreads(Request $request)
+    public function getPromotionThreadsAction(Request $request)
     {
         $cs = $this->get("content_service");
         $threads = $cs->getThreadsPerLocation("promotion");
@@ -80,7 +99,7 @@ class ContentController extends Controller
     /**
      * @Route("/bachelor", name="bachelor_group")
      */
-    public function getYourBachelorThreads(Request $request)
+    public function getBachelorThreadsAction(Request $request)
     {
         $cs = $this->get("content_service");
         $threads = $cs->getThreadsPerLocation("bachelor");
@@ -128,28 +147,6 @@ class ContentController extends Controller
         return $this->render("Content/add_thread.html.twig", [
             "form" => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/classe", name="class_group")
-     */
-    public function getYourClassThreads(Request $request)
-    {
-        $cs = $this->get("content_service");
-        $threads = $cs->getThreadsPerLocation("classe");
-        $replies = $cs->getReplies($threads);
-
-        if($threads) {
-            return $this->render("Content/list_thread.html.twig", [
-                "threads" => $threads,
-                "replies" => $replies,
-                "thread_form" => $this->getThreadForm()->createView(),
-                "reply_form" => $this->getReplyForm()->createView(),
-            ]);
-        } else {
-            return new Response("It's not your class", 403);
-        }
-
     }
 
     /**
