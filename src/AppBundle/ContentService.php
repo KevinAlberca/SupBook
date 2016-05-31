@@ -46,6 +46,7 @@ class ContentService
         $replies = $this->_em->getRepository("AppBundle:Reply")->findAll();
         return [
             "threads" => $allThreads,
+            "thread_form" => $this->getThreadForm()->createView(),
             "replies" => $replies,
         ];
     }
@@ -85,7 +86,9 @@ class ContentService
     {
         $threads_location = $this->getThreadsLocationForUser()[$type][0]->id;
         $threads = $this->_em->getRepository("AppBundle:Thread")->getThreadsWithLocation($threads_location);
-        return $threads;
+        return [
+            "threads" => $threads,
+        ];
     }
 
     public function getReplies(){
@@ -107,5 +110,21 @@ class ContentService
             ->add("submit", SubmitType::class)
             ->getForm();
         return $form;
+    }
+
+    public function addThread($data) {
+        if($data != null) {
+            $thread = new Thread();
+            $thread->setIdAuthor($this->_user->id);
+            $thread->setContent($data["content"]);
+            $thread->setIdLocation($data["id_location"]);
+            $thread->setPostDate(new \DateTime());
+
+            $this->_em->persist($thread);
+            $this->_em->flush();
+
+            return true;
+        }
+        return false;
     }
 }

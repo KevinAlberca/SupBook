@@ -28,6 +28,7 @@ class ContentController extends Controller
             "class_threads" => $r["threads"]["classe"],
             "bachelor_threads" => $r["threads"]["bachelor"],
             "promotion_threads" => $r["threads"]["promotion"],
+            "thread_form" => $r["thread_form"],
             "replies" => $r["replies"],
             "reply_form" => $this->getReplyForm()->createView(),
         ]);
@@ -58,7 +59,7 @@ class ContentController extends Controller
     public function getClassThreadsAction(Request $request)
     {
         $cs = $this->get("content_service");
-        $threads = $cs->getThreadsPerLocation("classe");
+        $threads = $cs->getThreadsPerLocation("classe")["threads"];
         $replies = $cs->getReplies($threads);
 
         if($threads) {
@@ -80,7 +81,7 @@ class ContentController extends Controller
     public function getPromotionThreadsAction(Request $request)
     {
         $cs = $this->get("content_service");
-        $threads = $cs->getThreadsPerLocation("promotion");
+        $threads = $cs->getThreadsPerLocation("promotion")["threads"];
         $replies = $cs->getReplies();
 
         if($threads) {
@@ -102,7 +103,7 @@ class ContentController extends Controller
     public function getBachelorThreadsAction(Request $request)
     {
         $cs = $this->get("content_service");
-        $threads = $cs->getThreadsPerLocation("bachelor");
+        $threads = $cs->getThreadsPerLocation("bachelor")["threads"];
         $replies = $cs->getReplies();
 
         if($threads) {
@@ -123,24 +124,16 @@ class ContentController extends Controller
      */
     public function addContentAction(Request $request)
     {
-        $form = $this->getThreadForm();
-
+        $cs = $this->get("content_service");
+        $form = $cs->getThreadForm();
         $form->handleRequest($request);
 
         if($request->getMethod() == "POST") {
             if($form->isSubmitted() && $form->isValid()) {
-                if($form->getData()->content != null) {
-                    $em = $this->getDoctrine()->getManager();
-                    $thread = new Thread();
-                    $thread->setIdAuthor($this->get('security.token_storage')->getToken()->getUser()->id);
-                    $thread->setContent($form->getData()->content);
-                    $thread->setPostDate(new \DateTime());
-                    $thread->setIdLocation($form->getData()->idLocation);
-                    $em->persist($thread);
-                    $em->flush();
+                if($cs->addThread($form->getData())) {
+                    return $this->redirectToRoute("homepage");
                 }
 
-                return $this->redirectToRoute("homepage");
             }
         }
 
