@@ -30,7 +30,6 @@ class ContentController extends Controller
             "promotion_threads" => $r["threads"]["promotion"],
             "thread_form" => $r["thread_form"],
             "replies" => $r["replies"],
-            "reply_form" => $this->getReplyForm()->createView(),
         ]);
     }
 
@@ -45,7 +44,7 @@ class ContentController extends Controller
             return $this->render("Content/one_thread.html.twig", [
                 "thread" => $r["thread"],
                 "replies" => $r["replies"],
-                "reply_form" => $this->getReplyForm()->createView(),
+                "reply_form" => $cs->getReplyForm()->createView(),
                 "id" => $id,
             ]);
         }
@@ -66,8 +65,8 @@ class ContentController extends Controller
             return $this->render("Content/list_thread.html.twig", [
                 "threads" => $threads,
                 "replies" => $replies,
-                "thread_form" => $this->getThreadForm()->createView(),
-                "reply_form" => $this->getReplyForm()->createView(),
+                "thread_form" => $cs->getThreadForm()->createView(),
+                "reply_form" => $cs->getReplyForm()->createView(),
             ]);
         } else {
             return new Response("It's not your class", 403);
@@ -88,8 +87,8 @@ class ContentController extends Controller
             return $this->render("Content/list_thread.html.twig", [
                 "threads" => $threads,
                 "replies" => $replies,
-                "thread_form" => $this->getThreadForm()->createView(),
-                "reply_form" => $this->getReplyForm()->createView(),
+                "thread_form" => $cs->getThreadForm()->createView(),
+                "reply_form" => $cs->getReplyForm()->createView(),
             ]);
         } else {
             return new Response("It's not your bachelor", 403);
@@ -110,8 +109,8 @@ class ContentController extends Controller
             return $this->render("Content/list_thread.html.twig", [
                 "threads" => $threads,
                 "replies" => $replies,
-                "thread_form" => $this->getThreadForm()->createView(),
-                "reply_form" => $this->getReplyForm()->createView(),
+                "thread_form" => $cs->getThreadForm()->createView(),
+                "reply_form" => $cs->getReplyForm()->createView(),
             ]);
         } else {
             return new Response("It's not your bachelor", 403);
@@ -147,42 +146,21 @@ class ContentController extends Controller
      */
     public function addReplyAction(Request $request)
     {
-        $form = $this->getReplyForm();
+        $cs = $this->get("content_service");
+        $form = $cs->getReplyForm();
         $form->handleRequest($request);
 
         if($request->getMethod() == "POST") {
             if($form->isSubmitted() && $form->isValid()) {
-                if($form->getData()->content != null) {
-                    $em = $this->getDoctrine()->getManager();
-                    $reply = new Reply();
-                    $reply->setIdAuthor($this->get('security.token_storage')->getToken()->getUser()->id);
-                    $reply->setContent($form->getData()->content);
-                    $reply->setPostDate(new \DateTime());
-                    $reply->setIdThread($form->getData()->idThread);
-                    $em->persist($reply);
-                    $em->flush();
+                if($cs->addReply($form->getData())) {
+                    return $this->redirectToRoute("homepage");
                 }
-
-                return $this->redirectToRoute("homepage");
             }
         }
 
         return $this->renderView("Content/add_reply.html.twig", [
             "reply_form" => $form,
-
         ]);
-    }
-
-    public function getReplyForm()
-    {
-        $reply = new Reply();
-        $form = $this->createFormBuilder($reply)
-                ->add("content", TextareaType::class)
-                ->add("id_thread", HiddenType::class)
-                ->add("submit", SubmitType::class)
-                ->getForm();
-
-        return $form;
     }
 
 }

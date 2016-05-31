@@ -1,4 +1,6 @@
 <ul>
+
+    {#{{ dump(threads) }}#}
 {% for t in threads %}
     <li class="thread">
         {{ t.content|nl2br }}
@@ -19,6 +21,8 @@
                         </li>
                     {% endif %}
                 {% endfor %}
+                {# Reply Form #}
+                {{ include("Content/add_reply.html.twig", {"reply_form": t.reply_form, "thread_id": t.id }) }}
             </ul>
         </div>
     </li>

@@ -8,6 +8,7 @@
 
 namespace AppBundle;
 
+use AppBundle\Entity\Reply;
 use AppBundle\Entity\Thread;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -38,9 +39,9 @@ class ContentService
         $location = $this->getThreadsLocationForUser();
 
         $allThreads = [
-            "classe" => $this->_em->getRepository("AppBundle:Thread")->getThreadsWithLocation($location["classe"][0]->id),
-            "promotion" => $this->_em->getRepository("AppBundle:Thread")->getThreadsWithLocation($location["promotion"][0]->id),
-            "bachelor" => $this->_em->getRepository("AppBundle:Thread")->getThreadsWithLocation($location["bachelor"][0]->id),
+            "classe" => $this->getThreadWithReplyForm($this->_em->getRepository("AppBundle:Thread")->getThreadsWithLocation($location["classe"][0]->id)),
+            "promotion" => $this->getThreadWithReplyForm($this->_em->getRepository("AppBundle:Thread")->getThreadsWithLocation($location["promotion"][0]->id)),
+            "bachelor" => $this->getThreadWithReplyForm($this->_em->getRepository("AppBundle:Thread")->getThreadsWithLocation($location["bachelor"][0]->id)),
         ];
 
         $replies = $this->_em->getRepository("AppBundle:Reply")->findAll();
@@ -48,6 +49,7 @@ class ContentService
             "threads" => $allThreads,
             "thread_form" => $this->getThreadForm()->createView(),
             "replies" => $replies,
+            "reply_form" => $this->getReplyForm()->createView(),
         ];
     }
 
@@ -87,7 +89,7 @@ class ContentService
         $threads_location = $this->getThreadsLocationForUser()[$type][0]->id;
         $threads = $this->_em->getRepository("AppBundle:Thread")->getThreadsWithLocation($threads_location);
         return [
-            "threads" => $threads,
+            "threads" => $this->getThreadWithReplyForm($threads),
         ];
     }
 
@@ -126,5 +128,42 @@ class ContentService
             return true;
         }
         return false;
+    }
+
+    public function getReplyForm()
+    {
+        $form = $this->_container->get('form.factory')->createBuilder()
+            ->add("content", TextareaType::class)
+            ->add("id_thread", HiddenType::class)
+            ->add("submit", SubmitType::class)
+            ->getForm();
+
+        return $form;
+    }
+
+    public function addReply($data) {
+        if($data != null) {
+            $reply = new Reply();
+            $reply->setIdAuthor($this->_user->id);
+            $reply->setContent($data["content"]);
+            $reply->setPostDate(new \DateTime());
+            $reply->setIdThread($data["id_thread"]);
+            $this->_em->persist($reply);
+            $this->_em->flush();
+
+            return true;
+        }
+        return false;
+    }
+
+    private function getThreadWithReplyForm($threads) {
+        $allThreads = $threads;
+        $reply_form = $this->getReplyForm();
+
+        for($i=0;$i < count($allThreads); $i++){
+            $allThreads[$i]["reply_form"] = $reply_form->createView();
+        }
+
+        return $allThreads;
     }
 }
