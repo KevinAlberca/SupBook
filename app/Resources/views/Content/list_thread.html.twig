@@ -2,8 +2,6 @@
 {% block title %}Liste du contenu{% endblock %}
 
 {% block body %}
-
-    {{ dump(threads) }}
-    {#{{ include('Content/add_thread.html.twig', {'form': thread_form}) }}#}
-    {{ include('Content/list_content.html.twig', {'threads': threads}) }}
+    {{ include("Content/add_thread.html.twig", {"form": thread_form }) }}
+    {{ include('Content/list_content.html.twig', {'threads': threads, "form":reply_form }) }}
 {% endblock %}

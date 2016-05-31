@@ -24,13 +24,11 @@ class ContentController extends Controller
         $cs = $this->get("content_service");
         $r = $cs->listAllThreads();
 
-
         return $this->render("homepage.html.twig", [
             "class_threads" => $r["threads"]["classe"],
             "bachelor_threads" => $r["threads"]["bachelor"],
             "promotion_threads" => $r["threads"]["promotion"],
             "replies" => $r["replies"],
-            "thread_form" => $r["thread_form"],
             "reply_form" => $this->getReplyForm()->createView(),
         ]);
     }
@@ -193,6 +191,5 @@ class ContentController extends Controller
 
         return $form;
     }
-
 
 }

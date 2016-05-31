@@ -12,14 +12,13 @@
             </ul>
         </div>
         <div id="classe" class="col s12">
-            {{ dump(class_threads) }}
-            {{ include('Content/list_content.html.twig', {'threads': class_threads}) }}
+            {{ include('Content/list_content.html.twig', {'threads': class_threads, 'reply_form': reply_form}) }}
         </div>
         <div id="promotion" class="col s12">
-            {{ include('Content/list_content.html.twig', {'threads': promotion_threads}) }}
+            {{ include('Content/list_content.html.twig', {'threads': promotion_threads, 'reply_form': reply_form}) }}
         </div>
         <div id="bachelor" class="col s12">
-            {{ include('Content/list_content.html.twig', {'threads': bachelor_threads}) }}
+            {{ include('Content/list_content.html.twig', {'threads': bachelor_threads, 'reply_form': reply_form}) }}
         </div>
     </div>
 {% endblock %}

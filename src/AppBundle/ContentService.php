@@ -11,6 +11,7 @@ namespace AppBundle;
 use AppBundle\Entity\Thread;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -45,7 +46,6 @@ class ContentService
         $replies = $this->_em->getRepository("AppBundle:Reply")->findAll();
         return [
             "threads" => $allThreads,
-            "thread_form" => $this->getThreadForm()->createView(),
             "replies" => $replies,
         ];
     }

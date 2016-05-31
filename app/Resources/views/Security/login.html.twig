@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <title>Connexion necessaire - SUP'Book</title>
+    <link rel="stylesheet" href="{{ asset("css/materialize.min.css") }}" />
     <link rel="stylesheet" href="{{ asset("css/style.css") }}" />
-    <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}" />
 </head>
 <body>
     <form action="{{ path('_security_login_check') }}" method="POST">
@@ -17,7 +17,7 @@
             <input type="password" id="password" name="_password" placeholder="•••••••••" />
         </div>
 
-        <input type="submit" name="login"/>
+        <input type="submit" name="login" class="btn"/>
     </form>
 
     {% if error %}
