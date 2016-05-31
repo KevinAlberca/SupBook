@@ -24,12 +24,14 @@ class ContentController extends Controller
         $cs = $this->get("content_service");
         $r = $cs->listAllThreads();
 
+
         return $this->render("homepage.html.twig", [
             "class_threads" => $r["threads"]["classe"],
             "bachelor_threads" => $r["threads"]["bachelor"],
             "promotion_threads" => $r["threads"]["promotion"],
             "replies" => $r["replies"],
-            "thread_form" => $this->getThreadForm()->createView(),
+            "thread_form" => $r["thread_form"],
+            "reply_form" => $this->getReplyForm()->createView(),
         ]);
     }
 
@@ -192,24 +194,5 @@ class ContentController extends Controller
         return $form;
     }
 
-    public function getThreadForm()
-    {
-        $cs = $this->get("content_service");
-        $r = $cs->getThreadsLocationForUser();
-
-        $thread = new Thread();
-        $form = $this->createFormBuilder($thread)
-            ->add("content", TextareaType::class)
-            ->add("id_location", ChoiceType::class, [
-                "choices"  => [
-                    'Classe' => $r["classe"][0]->id,
-                    'Bachelor' => $r["bachelor"][0]->id,
-                    'Promotion' => $r["promotion"][0]->id,
-                ],
-            ])
-            ->add("submit", SubmitType::class)
-            ->getForm();
-        return $form;
-    }
 
 }

@@ -8,7 +8,11 @@
 
 namespace AppBundle;
 
+use AppBundle\Entity\Thread;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\DependencyInjection\Container;
 
@@ -41,6 +45,7 @@ class ContentService
         $replies = $this->_em->getRepository("AppBundle:Reply")->findAll();
         return [
             "threads" => $allThreads,
+            "thread_form" => $this->getThreadForm()->createView(),
             "replies" => $replies,
         ];
     }
@@ -87,4 +92,20 @@ class ContentService
         return $this->_em->getRepository("AppBundle:Reply")->findAll();
     }
 
+    public function getThreadForm() {
+        $r = $this->getThreadsLocationForUser();
+
+        $form = $this->_container->get('form.factory')->createBuilder()
+            ->add("content", TextareaType::class)
+            ->add("id_location", ChoiceType::class, [
+                "choices"  => [
+                    'Classe' => $r["classe"][0]->id,
+                    'Bachelor' => $r["bachelor"][0]->id,
+                    'Promotion' => $r["promotion"][0]->id,
+                ],
+            ])
+            ->add("submit", SubmitType::class)
+            ->getForm();
+        return $form;
+    }
 }
