@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %} - Admin</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset("css/materialize.min.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset("css/admin.css") }}" />
+    {% block stylesheet %}{% endblock %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+
+    <script type="text/javascript" src="{{ asset("js/jquery.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("js/materialize.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("js/script.js") }}"></script>
+
+    {% block javascript %}{% endblock %}
+</body>
+</html>

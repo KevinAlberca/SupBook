@@ -2,6 +2,11 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
+admin:
+    resource: "@AppBundle/Controller/AdminController.php"
+    prefix:   /admin
+    type:     annotation
+
  # Cette route sera gérée automatiquement par symfony, il faut juste la déclarer
 _security_login_check:
     path: /login_check

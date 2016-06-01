@@ -1,0 +1,11 @@
+{% extends "::admin.html.twig" %}
+
+{% block body %}
+
+<a href="{{ path("list_users") }}">Nombre d'utilisateurs : {{ nb_user }}</a>
+<br/>
+<a href="{{ path("list_threads") }}">{{ nb_threads }}</a>
+<br/>
+<a href="{{ path("list_replies") }}">{{ nb_replies }}</a>
+
+{% endblock %}
