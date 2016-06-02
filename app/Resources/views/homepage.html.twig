@@ -12,13 +12,25 @@
             </ul>
         </div>
         <div id="classe" class="col s12">
-            {{ include('Content/list_content.html.twig', {'threads': class_threads }) }}
+            {% if class_threads|length != 0 %}
+                {{ include('Content/list_content.html.twig', {'threads': class_threads }) }}
+            {% else %}
+                <h1>There is no threads to display</h1>
+            {% endif %}
         </div>
         <div id="promotion" class="col s12">
-            {{ include('Content/list_content.html.twig', {'threads': promotion_threads }) }}
+            {% if promotion_threads|length != 0 %}
+                {{ include('Content/list_content.html.twig', {'threads': promotion_threads }) }}
+            {% else %}
+                <h1>There is no threads to display</h1>
+            {% endif %}
         </div>
         <div id="bachelor" class="col s12">
-            {{ include('Content/list_content.html.twig', {'threads': bachelor_threads }) }}
+            {% if bachelor_threads|length != 0 %}
+                {{ include('Content/list_content.html.twig', {'threads': bachelor_threads }) }}
+            {% else %}
+                <h1>There is no threads to display</h1>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

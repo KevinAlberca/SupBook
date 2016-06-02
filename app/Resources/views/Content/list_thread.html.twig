@@ -3,5 +3,10 @@
 
 {% block body %}
     {{ include("Content/add_thread.html.twig", {"form": thread_form }) }}
-    {{ include('Content/list_content.html.twig', {'threads': threads, "form":reply_form }) }}
+    {% if threads|length != 0 %}
+        {{ include('Content/list_content.html.twig', {'threads': threads, "form":reply_form }) }}
+    {% else %}
+        <h1>There is no threads to display</h1>
+    {% endif %}
+
 {% endblock %}

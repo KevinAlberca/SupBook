@@ -60,18 +60,12 @@ class ContentController extends Controller
         $cs = $this->get("content_service");
         $threads = $cs->getThreadsPerLocation("classe")["threads"];
         $replies = $cs->getReplies($threads);
-
-        if($threads) {
-            return $this->render("Content/list_thread.html.twig", [
-                "threads" => $threads,
-                "replies" => $replies,
-                "thread_form" => $cs->getThreadForm()->createView(),
-                "reply_form" => $cs->getReplyForm()->createView(),
-            ]);
-        } else {
-            return new Response("It's not your class", 403);
-        }
-
+        return $this->render("Content/list_thread.html.twig", [
+            "threads" => $threads,
+            "replies" => $replies,
+            "thread_form" => $cs->getThreadForm()->createView(),
+            "reply_form" => $cs->getReplyForm()->createView(),
+        ]);
     }
 
     /**
@@ -83,17 +77,12 @@ class ContentController extends Controller
         $threads = $cs->getThreadsPerLocation("promotion")["threads"];
         $replies = $cs->getReplies();
 
-        if($threads) {
-            return $this->render("Content/list_thread.html.twig", [
-                "threads" => $threads,
-                "replies" => $replies,
-                "thread_form" => $cs->getThreadForm()->createView(),
-                "reply_form" => $cs->getReplyForm()->createView(),
-            ]);
-        } else {
-            return new Response("It's not your bachelor", 403);
-        }
-
+        return $this->render("Content/list_thread.html.twig", [
+            "threads" => $threads,
+            "replies" => $replies,
+            "thread_form" => $cs->getThreadForm()->createView(),
+            "reply_form" => $cs->getReplyForm()->createView(),
+        ]);
     }
 
     /**
@@ -105,17 +94,12 @@ class ContentController extends Controller
         $threads = $cs->getThreadsPerLocation("bachelor")["threads"];
         $replies = $cs->getReplies();
 
-        if($threads) {
-            return $this->render("Content/list_thread.html.twig", [
-                "threads" => $threads,
-                "replies" => $replies,
-                "thread_form" => $cs->getThreadForm()->createView(),
-                "reply_form" => $cs->getReplyForm()->createView(),
-            ]);
-        } else {
-            return new Response("It's not your bachelor", 403);
-        }
-
+        return $this->render("Content/list_thread.html.twig", [
+            "threads" => $threads,
+            "replies" => $replies,
+            "thread_form" => $cs->getThreadForm()->createView(),
+            "reply_form" => $cs->getReplyForm()->createView(),
+        ]);
     }
 
     /**
