@@ -14,7 +14,7 @@
     <div class="navbar-fixed">
             <nav>
                 <div class="nav-wrapper">
-                    <a href="/" class="brand-logo">
+                    <a href="{{ path("homepage") }}" class="brand-logo">
                         <img src="{{ asset("img/logo.png") }}" alt="Logo SUP'Book" />
                     </a>
                     <ul class="right hide-on-med-and-down">
@@ -22,10 +22,10 @@
                         <li><a class="dropdown-button" href="#!" data-activates="user_dropdown"><i class="material-icons center">person_outline</i></a></li>
                     </ul>
                     <ul id="user_dropdown" class="dropdown-content">
-                        <li><a href="/profile">Profile</a></li>
-                        <li><a href="/parameters">Parameters</a></li>
+                        <li><a href="{{ path("user_profile") }}">Profile</a></li>
+                        <li><a href="{{ path("parameters") }}">Parameters</a></li>
                         <li class="divider"></li>
-                        <li><a href="/logout">Log out</a></li>
+                        <li><a href="{{ path("_security_logout") }}">Log out</a></li>
                     </ul>
                 </div>
             </nav>
@@ -33,9 +33,9 @@
         <div class="row">
             <div class="col s2">
                 <ul>
-                    <li><a href="/promotion">Ma Promotion</a></li>
-                    <li><a href="/classe">Ma classe</a></li>
-                    <li><a href="/bachelor">Mon Bachelor</a></li>
+                    <li><a href="{{ path("promotion_group") }}">Ma Promotion</a></li>
+                    <li><a href="{{ path("class_group") }}">Ma classe</a></li>
+                    <li><a href="{{ path("bachelor_group") }}">Mon Bachelor</a></li>
                 </ul>
             </div>
         </div>
