@@ -53,7 +53,12 @@ class AdminController extends Controller
      * @Route("/list/threads", name="list_threads")
      */
     public function listThreadsAction() {
+        $as = $this->get("admin_service");
+        $threads = $as->getThreads();
 
+        return $this->render("Admin/list_threads.html.twig", [
+            "threads" => $threads,
+        ]);
     }
 
     /**

@@ -1,0 +1,42 @@
+{% extends "::admin.html.twig" %}
+
+{% block title %}Liste des Posts{% endblock %}
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+{% endblock %}
+
+
+{% block body %}
+    <h2 class="center">Liste des utilisateurs</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>lastname</th>
+            <th>firstname</th>
+            <th>content</th>
+            <th>promotion_year</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for thread in threads %}
+            <tr>
+                <td>{{ thread.id }}</td>
+                <td>{{ thread.lastname }}</td>
+                <td>{{ thread.firstname }}</td>
+                <td>{{ thread.content | striptags | slice(0, 100) }}</td>
+                <td>{{ thread.promotion_year }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block javascript %}
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('table').DataTable();
+        });
+    </script>
+{% endblock %}

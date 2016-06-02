@@ -39,6 +39,10 @@ class AdminService
         return $this->_em->getRepository("AppBundle:User")->findAll();
     }
 
+    public function getThreads() {
+        return $this->_em->getRepository("AppBundle:Thread")->getAllThreads();
+    }
+
     public function countUsers() {
         return count($this->_em->getRepository("AppBundle:User")->findAll());
     }
