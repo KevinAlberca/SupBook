@@ -9,7 +9,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Reply;
+use AppBundle\Entity\Role;
 use AppBundle\Entity\Thread;
+use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 class AdminController extends Controller
 {
@@ -65,6 +68,5 @@ class AdminController extends Controller
      * @Route("/list/replies", name="list_replies")
      */
     public function listRepliesAction() {
-
     }
 }
