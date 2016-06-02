@@ -1,7 +1,5 @@
-<form action="" method="POST">
-    {{ form_start(email_form) }}
-        {{ form_row(email_form.email) }}
-        {{ form_row(email_form.password) }}
-        {{ form_row(email_form.submit, { 'attr': {'class': 'btn'} }) }}
-    {{ form_end(email_form) }}
-</form>
+{{ form_start(email_form) }}
+    {{ form_row(email_form.email) }}
+    {{ form_row(email_form.password) }}
+    {{ form_row(email_form.submit, { 'attr': {'class': 'btn'} }) }}
+{{ form_end(email_form) }}
