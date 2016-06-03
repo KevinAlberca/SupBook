@@ -7,21 +7,51 @@
     <link rel="stylesheet" href="{{ asset("css/style.css") }}" />
 </head>
 <body>
-    <form action="{{ path('_security_login_check') }}" method="POST">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="_username" placeholder="prenom.nom" value="{{ last_username }}" />
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo left">
+                    <img src="{{ asset("img/logo.png") }}" alt="Bienvenue sur SUP'Book !" />
+                </a>
+                <ul id="nav-mobile" class="section table-of-contents right">
+                    <li><a href="#connexion">Connexion</a></li>
+                    <li><a href="#presentation">Présentation</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="row">
+        <div id="connexion" class="section scrollspy container">
+            <div class="row">
+                <div class="col s12 m4 push-m4">
+                    <form action="{{ path('_security_login_check') }}" method="POST">
+                        <div>
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" name="_username" placeholder="prenom.nom" value="{{ last_username }}" />
+                        </div>
+                        <div>
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="_password" placeholder="•••••••••" />
+                        </div>
+                        <div class="center">
+                            <input type="submit" name="login" class="btn"/>
+                        </div>
+                    </form>
+                    {% if error %}
+                        <div class="error">{{ error.message }}</div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password" placeholder="•••••••••" />
+        <div id="presentation" class="section scrollspy">
+            <p>Réseau social privé</p>
         </div>
+    </div>
 
-        <input type="submit" name="login" class="btn"/>
-    </form>
 
-    {% if error %}
-        <div class="error">{{ error.message }}</div>
-    {% endif %}
+    <script type="text/javascript" src="{{ asset("js/jquery.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("js/materialize.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("js/supbook.js") }}"></script>
 </body>
 </html>

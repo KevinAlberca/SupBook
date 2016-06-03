@@ -11,6 +11,29 @@ nav {
   .dropdown-content {
     margin-top:65px;
   }
+
+  #nav-mobile.section {
+    padding:0;
+  }
+
+  .table-of-contents a {
+    transition: background-color .3s;
+    font-size: 1rem;
+    color: $white !important;
+    display: inline-block;
+    padding: 0 15px;
+    cursor: pointer;
+    line-height: 68px;
+    height: 64px;
+    margin-top:-2px;
+    border:0 !important;
+
+    &:hover, &:active {
+      background-color: $darkGrey;
+      margin-top:-2px;
+      padding:0 15px;
+    }
+  }
 }
 
 
