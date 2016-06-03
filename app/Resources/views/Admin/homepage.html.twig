@@ -2,10 +2,15 @@
 
 {% block body %}
 
-<a href="{{ path("list_users") }}">Nombre d'utilisateurs : {{ nb_user }}</a>
-<br/>
-<a href="{{ path("list_threads") }}">Nombre de post :{{ nb_threads }}</a>
-<br/>
-<a href="{{ path("list_replies") }}">Nombre de response : {{ nb_replies }}</a>
-
+    <div class="row">
+        <div class="col s12 m4">
+            <a href="{{ path("list_users") }}">Nombre d'utilisateurs : {{ nb_user }}</a>
+        </div>
+        <div class="col s12 m4" style="background:red;">
+            <a href="{{ path("list_threads") }}">Nombre de post :{{ nb_threads }}</a>
+        </div>
+        <div class="col s12 m4" style="background:red;">
+            <a href="{{ path("list_replies") }}">Nombre de response : {{ nb_replies }}</a>
+        </div>
+    </div>
 {% endblock %}

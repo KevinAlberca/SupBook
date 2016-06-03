@@ -4,21 +4,36 @@
     <meta charset="utf-8" />
     <title>{% block title %}{% endblock %} - Admin</title>
     <link rel="stylesheet" type="text/css" href="{{ asset("css/materialize.min.css") }}" />
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset("css/admin.css") }}" />
     {% block stylesheet %}{% endblock %}
 </head>
 <body>
-    <ul>
-        <li><a href="{{ path("admin_homepage") }}">Accueil</a></li>
-        {#<li><a href="{{ path("admin_homepage") }}">Accueil</a></li>#}
-        {#<li><a href="{{ path("admin_homepage") }}">Accueil</a></li>#}
-        {#<li><a href="{{ path("admin_homepage") }}">Accueil</a></li>#}
-    </ul>
-    {% block body %}{% endblock %}
+    <div id="sidebar" class="collapsed">
+        <div class="sidebar-extends">
+            <button id="toggle-sidebar" class="btn"><i class="material-icons">home</i></button>
+        </div>
+        <a href="{{ path("admin_homepage") }}">
+            <img class="img-responsive logo" src="{{ asset("img/logo.png") }}" />
+        </a>
+        <nav class="main-menu">
+            <ul>
+                <li {% if app.request.server.get("REQUEST_URI") == path("admin_homepage") %}class="active"{% endif %} ><a href="{{ path("admin_homepage") }}">Accueil</a></li>
+                <li {% if app.request.server.get("REQUEST_URI") == path("list_users") %}class="active"{% endif %} ><a href="{{ path("list_users") }}">Users</a></li>
+                <li {% if app.request.server.get("REQUEST_URI") == path("list_threads") %}class="active"{% endif %} ><a href="{{ path("list_threads") }}">Threads</a></li>
+                <li {% if app.request.server.get("REQUEST_URI") == path("list_replies") %}class="active"{% endif %} ><a href="{{ path("list_replies") }}">Replies</a></li>
+                <li><a href="#">Link 4</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div id="main">
+        {% block body %}{% endblock %}
+    </div>
 
     <script type="text/javascript" src="{{ asset("js/jquery.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("js/materialize.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("js/script.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("js/admin.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("js/supbook.js") }}"></script>
 
     {% block javascript %}{% endblock %}
 </body>
