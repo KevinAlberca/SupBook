@@ -1,5 +1,5 @@
 {% extends "::admin.html.twig" %}
-
+{% block title %}Liste des utilisateurs{% endblock %}
 {% block stylesheet %}
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
 {% endblock %}
@@ -8,6 +8,7 @@
 
 {% block body %}
     <h2 class="center">Liste des utilisateurs</h2>
+    <a class="waves-effect waves-light btn modal-trigger" href="#create_user">Create user</a>
     <table>
         <thead>
             <tr>
@@ -32,6 +33,14 @@
         {% endfor %}
         </tbody>
     </table>
+    <div id="create_user" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            {{ include("Admin/add_user.html.twig", { "form": user_form}) }}
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Quit</a>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascript %}
@@ -39,6 +48,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $('table').DataTable();
+            $('.modal-trigger').leanModal();
         });
     </script>
 {% endblock %}

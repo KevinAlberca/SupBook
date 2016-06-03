@@ -1,0 +1,21 @@
+{% block title %}Ajout d'un utilisateur{% endblock %}
+{% block body %}
+    <div class="row">
+        <form method="POST" action="{{ path("add_user") }}">
+            {{ form_start(form) }}
+            <div class="col s12 m6">
+                {{ form_row(form.last_name) }}
+            </div>
+            <div class="col s12 m6">
+                {{ form_row(form.first_name) }}
+            </div>
+            {{ form_row(form.email) }}
+            {{ form_row(form.promotion_year) }}
+            {{ form_row(form.id_bachelor) }}
+            <div class="center">
+                {{ form_row(form.submit, { "attr" : { "class" : "btn" }, "label" : "Creer un compte"}) }}
+            </div>
+            {{ form_end(form) }}
+        </form>
+    </div>
+{% endblock %}
