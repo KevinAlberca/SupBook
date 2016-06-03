@@ -4,13 +4,37 @@
 
     <div class="row">
         <div class="col s12 m4">
-            <a href="{{ path("list_users") }}">Nombre d'utilisateurs : {{ nb_user }}</a>
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">Utilisateurs</span>
+                    <p>Description du block . . .</p>
+                </div>
+                <div class="card-action">
+                    <a href="{{ path("list_users") }}" class="right">Nombre d'utilisateurs : {{ nb_user }}</a>
+                </div>
+            </div>
         </div>
-        <div class="col s12 m4" style="background:red;">
-            <a href="{{ path("list_threads") }}">Nombre de post :{{ nb_threads }}</a>
+        <div class="col s12 m4">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">Post</span>
+                    <p>Description du block . . .</p>
+                </div>
+                <div class="card-action">
+                    <a href="{{ path("list_threads") }}" class="right">Nombre de post :{{ nb_threads }}</a>
+                </div>
+            </div>
         </div>
-        <div class="col s12 m4" style="background:red;">
-            <a href="{{ path("list_replies") }}">Nombre de response : {{ nb_replies }}</a>
+        <div class="col s12 m4">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">Reponses</span>
+                    <p>Description du block . . .</p>
+                </div>
+                <div class="card-action">
+                    <a href="{{ path("list_replies") }}" class="right">Nombre de response : {{ nb_replies }}</a>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

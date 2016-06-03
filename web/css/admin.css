@@ -25,8 +25,6 @@
       float: none; }
       #sidebar nav ul li:hover, #sidebar nav ul li:focus {
         background-color: #6b6b6b !important; }
-      #sidebar nav ul li li.active {
-        background-color: red; }
     #sidebar nav ul > a:hover, #sidebar nav ul > a:focus,
     #sidebar nav ul a:hover, #sidebar nav ul a:focus {
       transition: none;
@@ -60,5 +58,7 @@
   bottom: 0;
   left: 45px;
   right: 0px; }
+  #main .card a.right {
+    margin: -10px 0 0 0; }
 
 /*# sourceMappingURL=admin.css.map */

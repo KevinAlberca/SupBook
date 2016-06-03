@@ -38,9 +38,6 @@ $lightGrey: rgba(107, 107, 107, 1.0);
                 &:hover, &:focus {
                     background-color: $lightGrey !important;
                 }
-                li.active {
-                    background-color:red;
-                }
             }
 
             & > a:hover, & > a:focus,
@@ -87,4 +84,10 @@ $lightGrey: rgba(107, 107, 107, 1.0);
     bottom:0;
     left:45px;
     right:0px;
+
+    .card {
+        a.right {
+            margin:-10px 0 0 0;
+        }
+    }
 }
