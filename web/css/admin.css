@@ -61,4 +61,25 @@
   #main .card a.right {
     margin: -10px 0 0 0; }
 
+div.dataTables_wrapper .dataTables_paginate .paginate_button {
+  border: 0;
+  display: inline-block;
+  font-size: 1.2rem;
+  padding: 0 10px;
+  line-height: 30px;
+  border-radius: 2px;
+  text-align: center; }
+  div.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    border: 0;
+    background: #505050 !important;
+    color: white !important; }
+    div.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover, div.dataTables_wrapper .dataTables_paginate .paginate_button.current:focus {
+      background: #3f3f3f !important;
+      color: white !important;
+      border: 0; }
+  div.dataTables_wrapper .dataTables_paginate .paginate_button:hover, div.dataTables_wrapper .dataTables_paginate .paginate_button:focus {
+    background: #3f3f3f !important;
+    color: white !important;
+    border: 0; }
+
 /*# sourceMappingURL=admin.css.map */
