@@ -11,13 +11,5 @@
             {{ user.email }}
             {{ user.promotionYear }}
         </div>
-        <div class="col-xs-12 col-sm-8" style="background:red;">
-             {% for t in threads %}
-                 {{ t.idAuthor }}<br/>
-                 {{ t.content|nl2br }}
-                 {{ t.postDate|date("d F Y H:i:s") }}<br/>
-                 {{ t.id }}
-             {% endfor %}
-        </div>
     </div>
 {% endblock %}

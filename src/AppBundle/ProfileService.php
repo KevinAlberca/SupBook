@@ -33,8 +33,14 @@ class ProfileService
         $this->_container = $container;
     }
 
-    public function getUser() {
-        return $this->_user;
+    public function getUser($id = null) {
+        if($id == null) {
+            return $this->_user;
+        } else {
+            return $this->_em->getRepository("AppBundle:User")->findOneBy([
+                "id" => $id,
+            ]);
+        }
     }
 
 

@@ -28,20 +28,10 @@ class ProfileController extends Controller
      */
     public function showMyProfileAction()
     {
-        $user_id = $this->get('security.token_storage')->getToken()->getUser()->id;
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository("AppBundle:User")->findOneBy([
-            "id" => $user_id,
-        ]);
-
-        $threads = $em->getRepository("AppBundle:Thread")->findBy([
-            "idAuthor" => $user_id,
-        ]);
-
-
+        $ps = $this->get("profile_service");
+        $user = $ps->getUser();
         return $this->render("Profile/profile.html.twig", [
             "user" => $user,
-            "threads" => $threads
         ]);
     }
 
@@ -50,18 +40,11 @@ class ProfileController extends Controller
      */
     public function showMemberProfileAction($member_id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $user = $em->getRepository("AppBundle:User")->findOneBy(["id" => $member_id]);
-
+        $ps = $this->get("profile_service");
+        $user = $ps->getUser($member_id);
         if($user){
-            $threads = $em->getRepository("AppBundle:Thread")->findBy([
-                "idAuthor" => $member_id,
-            ]);
-
             return $this->render("Profile/profile.html.twig", [
                 "user" => $user,
-                "threads" => $threads,
             ]);
         } else {
             return new Response("This member ".$member_id." doesn't exists !");
@@ -82,11 +65,10 @@ class ProfileController extends Controller
 
         if($form->isValid() && $form->isSubmitted()){
             if($ps->changeEmail($form->getData())){
-                
+                $this->redirectToRoute("parameters");        
             }
         }
-
-
+        
         return $this->render("Profile/parameters.html.twig", [
             "user" => $user,
             "email_form" => $form->createView()
