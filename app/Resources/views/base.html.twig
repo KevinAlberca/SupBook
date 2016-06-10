@@ -36,6 +36,9 @@
                     <li><a href="{{ path("promotion_group") }}">Ma Promotion</a></li>
                     <li><a href="{{ path("class_group") }}">Ma classe</a></li>
                     <li><a href="{{ path("bachelor_group") }}">Mon Bachelor</a></li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li><a href="{{ path("admin_homepage") }}">Administration</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
