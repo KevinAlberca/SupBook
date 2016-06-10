@@ -11,8 +11,11 @@
     {{ user.email }}
 
     <div class="row">
-        <div class="col s12 m5 l4">
-            {{ include("Profile/change_email.html.twig", { 'user_email': user.email }) }}
+        <div class="col s12 m6">
+            {{ include("Profile/change_email.html.twig", {"form": email_form}) }}
+        </div>
+        <div class="col s12 m6">
+            {{ include("Profile/change_password.html.twig", {"form": password_form}) }}
         </div>
     </div>
 {% endblock %}

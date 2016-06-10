@@ -59,21 +59,39 @@ class ProfileController extends Controller
     {
         $ps = $this->get("profile_service");
         $user = $ps->getUser();
-        $form = $ps->getChangeEmailForm();
+        $email_form = $ps->getChangeEmailForm();
+        $password_form = $ps->getChangePasswordForm();
 
-        $form->handleRequest($request);
+        $email_form->handleRequest($request);
+        $password_form->handleRequest($request);
 
-        if($form->isValid() && $form->isSubmitted()){
-            if($ps->changeEmail($form->getData())){
-                $this->redirectToRoute("parameters");        
+        if($email_form->isSubmitted() && $email_form->isValid()) {
+            if($ps->changeEmail($email_form->getData())) {
+                return $this->redirectToRoute("parameters");
             }
         }
-        
+
+        if($password_form->isSubmitted() && $password_form->isValid()) {
+            if($ps->changePassword($password_form->getData())) {
+                return $this->redirectToRoute("parameters");
+            }
+        }
+
         return $this->render("Profile/parameters.html.twig", [
             "user" => $user,
-            "email_form" => $form->createView()
+            "email_form" => $email_form->createView(),
+            "password_form" => $password_form->createView(),
         ]);
     }
 
+    /**
+     * @Route("/parameters/change_email", name="change_email")
+     */
+    public function changeEmailAction() {
+        $ps = $this->get("profile_service");
+        return $this->render("Profile/change_email.html.twig", [
+            "form" => $ps->getChangePasswordForm()->createView(),
+        ]);
+    }
 
 }

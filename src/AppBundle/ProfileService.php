@@ -43,12 +43,8 @@ class ProfileService
         }
     }
 
-
     public function changeEmail($data) {
-
-        $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
-        $password = $encoder->encodePassword($data["password"], $this->_user->getSalt());
-
+        $password = $this->getHashedPassword($data["password"]);
         if($password == $this->_user->getPassword()){
             $this->_user->setEmail($data["email"]);
             $this->_em->persist($this->_user);
@@ -59,11 +55,21 @@ class ProfileService
         return false;
     }
 
+    public function changePassword($data) {
+        $hashed_old_pwd = $this->getHashedPassword($data["old_password"], $this->_user->getSalt());
 
+        if($hashed_old_pwd === $this->_user->getPassword()) {
+            $hashed_new_pwd = $this->getHashedPassword($data["password"], $this->_user->getSalt());
+            $this->_user->setPassword($hashed_new_pwd);
+            $this->_em->persist($this->_user);
+            $this->_em->flush();
 
+            return true;
+        }
+        return false;
+    }
 
-    public function getChangeEmailForm()
-    {
+    public function getChangeEmailForm() {
         $form = $this->_container->get('form.factory')->createBuilder()
             ->add("email", RepeatedType::class, [
                 "first_options"  => ["label" => "New e-mail"],
@@ -74,6 +80,24 @@ class ProfileService
             ->add("submit", SubmitType::class)
             ->getForm();
         return $form;
+    }
+
+    public function getChangePasswordForm() {
+        $form = $this->_container->get('form.factory')->createBuilder()
+            ->add("password", RepeatedType::class, [
+                "first_options"  => ["label" => "New password"],
+                "second_options" => ["label" => "Repeat new password"],
+                "type" => PasswordType::class
+            ])
+            ->add("old_password", PasswordType::class)
+            ->add("submit", SubmitType::class)
+            ->getForm();
+        return $form;
+    }
+
+    public function getHashedPassword($password, $salt) {
+        $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
+        return $encoder->encodePassword($password, $salt);
     }
 
 }
