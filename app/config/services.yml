@@ -12,6 +12,10 @@ services:
         class: AppBundle\ContentService
         arguments: ["@security.token_storage", "@doctrine.orm.entity_manager", "@service_container"]
 
+    profile_service:
+        class: AppBundle\ProfileService
+        arguments: ["@security.token_storage", "@doctrine.orm.entity_manager", "@service_container"]
+
     admin_service:
         class: AppBundle\AdminService
         arguments: ["@security.token_storage", "@doctrine.orm.entity_manager", "@service_container"]

@@ -74,48 +74,24 @@ class ProfileController extends Controller
      */
     public function memberParametersAction(Request $request)
     {
-        $user_id = $this->get('security.token_storage')->getToken()->getUser()->id;
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository("AppBundle:User")->findOneBy([
-            "id" => $user_id,
-        ]);
+        $ps = $this->get("profile_service");
+        $user = $ps->getUser();
+        $form = $ps->getChangeEmailForm();
 
-        $email_form = $this->getChangeEmailForm();
+        $form->handleRequest($request);
 
-        $email_form->handleRequest($request);
-
-        if($email_form->isValid() && $email_form->isSubmitted()){
-            $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
-            $password = $encoder->encodePassword($email_form->getData()["password"], $user->getSalt());
-
-            if($password == $user->getPassword()){
-                $user->setEmail($email_form->getData()["email"]);
-                $em->persist($user);
-                $em->flush();
-
-                return $this->redirectToRoute("parameters");
+        if($form->isValid() && $form->isSubmitted()){
+            if($ps->changeEmail($form->getData())){
+                
             }
         }
 
 
         return $this->render("Profile/parameters.html.twig", [
             "user" => $user,
-            "email_form" => $email_form->createView()
+            "email_form" => $form->createView()
         ]);
     }
 
-    private function getChangeEmailForm()
-    {
-        $user = new User();
-        $form = $this->createFormBuilder()
-            ->add("email", RepeatedType::class, [
-                "first_options"  => ["label" => "New e-mail"],
-                "second_options" => ["label" => "Repeat new e-mail"],
-                "type" => EmailType::class
-            ])
-            ->add("password", PasswordType::class)
-            ->add("submit", SubmitType::class)
-            ->getForm();
-        return $form;
-    }
+
 }
