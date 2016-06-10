@@ -11,6 +11,7 @@ namespace AppBundle;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -47,13 +48,25 @@ class AdminService
         return $this->_em->getRepository("AppBundle:Thread")->getAllThreads();
     }
 
+    public function getBachelor() {
+        return $this->_em->getRepository("AppBundle:Bachelor")->findAll();
+    }
+
     public function getUserForm() {
+        $bachelor = $this->getBachelor();
+        $bachelor_choices = [];
+        foreach ($bachelor as $b) {
+            $bachelor_choices[$b->getName()] = $b->id;
+        }
+
         $form = $this->_container->get('form.factory')->createBuilder()
             ->add("last_name", TextType::class)
             ->add("first_name", TextType::class)
             ->add("email", TextType::class)
             ->add("promotion_year", IntegerType::class)
-            ->add("id_bachelor", IntegerType::class)
+            ->add("id_bachelor", ChoiceType::class, [
+                "choices" => $bachelor_choices
+            ])
             ->add("submit", SubmitType::class)
             ->getForm();
         return $form;
@@ -65,7 +78,7 @@ class AdminService
 
             $salt = $this->generateSalt();
             $password = $this->generatePassword();
-
+            file_put_contents(__DIR__."/../members/".strtolower($data["first_name"]."_".$data["last_name"]).".json", strtolower($data["first_name"]."_".$data["last_name"])."  -  ".$password);
             $user = new User();
 
             $user->setUsername(strtolower($data["first_name"].".".$data["last_name"]));
